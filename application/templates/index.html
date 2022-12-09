@@ -1,0 +1,344 @@
+{% extends 'base.html'%}
+{% block content%}
+{% include 'includes/carousel.html'%}
+<br>
+<div class="container">
+    <!-- <div class="card shadow p-3 mb-5 bg-white rounded">
+        <div class="card-body">
+            <h5 class="card-title text-center">Why Cosmo Juris</h5>
+            <p class="card-body" id="cosmos_full_info" style="text-align: justify; text-justify: inter-word;">
+                {{data[:700]}}...
+            </p>
+            <button class="btn btn-primary" id="hide_details_info" style="visibility: hidden;">Hide Details</button>
+            <button class="btn btn-danger" style="margin-left: 33%;" id="cosmos_info" value="{{data}}">Read
+                More</button>
+        </div>
+    </div> -->
+
+    <!-- What's New -->
+    <div class="container">
+        <!-- <marquee>Site under Construction</marquee> -->
+
+        <!-- Legal oppurtunities -->
+        <div class="legal_opur">
+            <div class="row">
+                <div
+                 class="col-9 col-md-3"
+                 style="background-color: green;"
+                 >
+                    <h6 class="text-white">Legal oppurtunities</h6>
+                </div>
+            </div>
+            <br />
+            <!-- Oppurtunities -->
+            <div class="row">
+                {% if oppt %}
+                {% for oppt in oppt.each()[::-1] %}
+                <!--Start modification for adding the new blog way-->
+                <div class="col-md-6">
+                    <div class="row mb-2 shadow bg-white" style="min-height: 160px;">
+                        <div class="col-4">
+                            <img class="img-fluid" src="{{oppt.val()['blog_url']}}" alt="Description">
+                            
+                        </div>
+                        <div class="col-8 mt-1">
+                            <h5 class="card-title">{{oppt.val()['title']}}</h5>
+                            <a href="{{url_for('oppt_details',key=oppt.key())}}"
+                                    style="text-decoration: none; float: right;">
+                                Read more...</a>
+                        </div>
+                        <!-- <hr /> -->
+                    </div>
+                </div>
+                
+                <!--End modification for adding the new blog way-->
+                {% endfor %}
+                {% endif %}
+            </div>
+            <center>
+                <h6><a href="/oppt">More Oppurtunities</a></h6>
+            </center>
+            
+        </div>
+        <!-- Blogs Here -->
+        <p></p>
+        <div>
+            <h4 class="text-center" style="font-weight: bold;">Our Recent Blogs </h4>
+            <div class="row">
+                {% if blog_preview %}
+                {% for blog in blog_preview.each() %}
+                <!-- <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="{{url_for('static',filename='images/caro1.jpg')}}" alt="Description">
+                        <div class="card-body">
+                            <h3 class="card-title">{{blog.val()['title']}}</h3>
+                            <p class="card-text">{{blog.val()['description']}}</p>
+                            <hr>
+                            <small>Author: {{blog.val()['blog_author']}}</small>
+                            <p><small>Last Updated: {{blog.val()['last_updated']}}</small></p>
+                            <a href="{{url_for('blog_details',key=blog.key())}}"
+                                style="text-decoration: none; color: white;">
+                                <button class="btn btn-primary">Details </button></a>
+                        </div>
+                    </div>
+                </div> -->
+                <!--Start modification for adding the new blog way-->
+                <div class="col-md-6">
+                    <div class="row mb-2 shadow bg-white" style="min-height: 160px;">
+                        <div class="col-4">
+                            <img class="img-fluid" src="{{blog.val()['blog_url']}}" alt="Description">
+                            <!-- <small>Author: {{blog.val()['blog_author']}}</small> -->
+                        </div>
+                        <div class="col-8 mt-1">
+                            <h5 class="card-title">{{blog.val()['title']}}</h5>
+                            <a href="{{url_for('blog_details',key=blog.key())}}"
+                                    style="text-decoration: none; float: right;">
+                                Read more...</a>
+                        </div>
+                        <!-- <hr /> -->
+                    </div>
+                </div>
+                
+                <!--End modification for adding the new blog way-->
+                {% endfor %}
+                {% endif %}
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <!-- <a href="{{url_for('index',more=n+5)}}"><button class="btn btn-primary mb-3">View More</button></a> -->
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+
+       <!-- Interviews -->
+       <div class="">
+        {%if interview %}
+        {%for int1 in interview.each() %}
+        {% if loop.index < 3 %}  
+        <div class="mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-9">
+                        <h4>{{int1.val()['interview_name']}}</h4>
+                        <h5>{{int1.val()['subject']}}</h5>
+                        <blockquote>{{int1.val()['summary']}}</blockquote>
+                        <a href="{{url_for('interview_details',key=int1.key())}}">Read More...</a>
+                    </div>
+                    <div class="col-3">
+                        <img src="{{int1.val()['image_url']}}" class="img-fluid" style="width: 100px;height: 100px;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
+
+
+        <div class="card" style="background-color: #0F1E40;">
+            <div class="card-body">
+                <h3 class="card-title text-center text-white">Our Works</h3>
+                <hr>
+                <marquee direction="up" onmouseover="this.stop();" onmouseout="this.start();">
+                    {% if event_notice %}
+                    {% for event in event_notice %}
+                    <a href="{{event.val()['event_url']}}" target="_blank">
+                        <p class="text-center text-white" style="text-align: justify; text-justify: inter-word;">A
+                            {{event.val()['event_name']}} is sechudled on {{event.val()['event_date']}}
+                            at {{event.val()['event_time']}} registration starts from {{event.val()['event_reg_start']}}
+                            and
+                            end {{event.val()['event_reg_end']}}
+                        </p>
+                    </a>
+                    {% endfor %}
+                    {% endif %}
+                </marquee>
+            </div>
+        </div>
+    </div>
+    <!-- Submit Your Paper -->
+    <br>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card" style="background-color: #0F1E40; height: 250px;" >
+                <div class="card-body">
+                    <h3 class="card-title text-white">Our Guide Lines</h3>
+                    <a href="#">
+                        <p class="text-white">Please check our guidelines here, before proceeding</p>
+                    </a>
+                </div>
+            </div>
+            <br>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card" style="background-color: #0F1E40; height: 250px;" >
+                <div class="card-body">
+                    <h3 class="card-title text-white">Blogs</h3>
+                    <a href="{{url_for('blogs')}}">
+                        <p class="text-white">Check out the blogs here</p>
+                    </a>
+                </div>
+            </div>
+            <br>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card" style="background-color: #0F1E40; height: 250px;" >
+                <div class="card-body">
+                    <h3 class="card-title text-white">Research Paper</h3>
+                    <a href="#">
+                        <p class="text-white">Check out the research papers here</p>
+                    </a>
+                </div>
+            </div>
+            <br>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card" style="background-color: #0F1E40; height: 250px;" >
+                <div class="card-body">
+                    <h3 class="card-title text-white">Submit Your Work</h3>
+                    <p class="card-text text-white">Hey there, Csomo Juris Invites you all to publish your research work</p>
+                    <a href="#"><button class=" justify-center btn btn-primary">Submit Now</button></a>
+                </div>
+            </div>
+            <br>
+        </div>
+        <div class="col-md-4">
+            <div class="card" style="background-color: #0F1E40; height: 250px;" >
+                <div class="card-body">
+                    <h3 class="card-title text-white">Having Issues submitting??</h3>
+                    <p class="card-text text-white">Either write down your issues to our help desk</p>
+                    <p class="text-white">or</p>
+                    <p class="text-white">Email us at: <a class="text-primary text-white" href="mailto:cosmojuris@gmail.com"
+                            style="text-decoration: none;">cosmojuris@gmail.com</a></p>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+
+    <br>
+    <!-- Submission Process -->
+    <div class="text-center">
+        <h3 class="d-flex justify-content-center">Publication Process</h3>
+        <img class="img-fluid" src="{{url_for('static',filename='images/PUBLICATION-PROCESS-HOME.jpg')}}"
+            alt="publication process">
+    </div>
+
+     <!-- Leader Speaks -->
+     {% if leader_speaks %}
+     <div class="container mb-3">
+         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+
+             <div class="carousel-inner">
+                     {% for leader in leader_speaks.each() %}
+                         <div class="carousel-item {% if loop.first %} active {% endif %}">
+                             <img class="d-block w-100" src="{{leader.val()['image_url']}}" style="height: 480px;" alt="First slide">
+                         </div>
+                     {% endfor %}
+             </div>
+             <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                 <span class="sr-only">Previous</span>
+               </a>
+               <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                 <span class="sr-only">Next</span>
+               </a>
+         </div>
+     </div>
+ {% endif %}
+
+ <!-- Event Poster -->
+ {% if poster%}
+ <div class="mb-3">
+     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+
+         <div class="carousel-inner">
+                 {% for p in poster.each() %}
+                     <div class="carousel-item {% if loop.first %} active {% endif %}">
+                         <img class="d-block w-100" src="{{p.val()['image_url']}}" style="height: 480px;" alt="First slide">
+                     </div>
+                 {% endfor %}
+         </div>
+         <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+             <span class="sr-only">Previous</span>
+           </a>
+           <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+             <span class="carousel-control-next-icon" aria-hidden="true"></span>
+             <span class="sr-only">Next</span>
+           </a>
+     </div>
+ </div>
+ {% endif %}
+
+
+
+
+    <!-- Search Bar -->
+
+
+    <!-- Certification and Student credits -->
+
+    <br>
+
+    
+
+    <br>
+    <!-- Feedback Form -->
+    <div class="">
+        <div class="card shadow p-3 mb-5 bg-white rounded">
+            <div class="card-body" style="background-color: #918888;">
+                <h3 class="card-title">Help Desk</h3>
+                <hr>
+                <form action="" method="POST">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" name="subject" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" id="" cols="30" rows="10" placeholder="type your message here..."
+                            class="form-control" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="feedback" class="btn btn-success">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<br><br>
+
+<script>
+
+    document.getElementById("cosmos_info").addEventListener("click", () => {
+        const data = document.getElementById("cosmos_info").value;
+        document.getElementById("cosmos_full_info").innerHTML = data;
+        document.getElementById("hide_details_info").style.visibility = "visible"
+        document.getElementById("cosmos_info").style.visibility = "hidden"
+    })
+
+    document.getElementById("hide_details_info").addEventListener("click", () => {
+        const data = document.getElementById("cosmos_full_info").innerHTML;
+        const sub_data = data.substr(0, 650);
+        document.getElementById("cosmos_full_info").innerHTML = sub_data;
+        document.getElementById("hide_details_info").style.visibility = "hidden"
+        document.getElementById("cosmos_info").style.visibility = "visible"
+    })
+
+</script>
+{% endblock %}

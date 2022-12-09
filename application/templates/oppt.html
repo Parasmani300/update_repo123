@@ -1,0 +1,46 @@
+{% extends 'base.html'%}
+{% block content%}
+<div class="container" style="margin-top: 100px;">
+    <div class="legal_opur">
+        <div class="row">
+            <div
+             class="col-9 col-md-3"
+             style="background-color: green;"
+             >
+                <h6 class="text-white">Legal oppurtunities</h6>
+            </div>
+        </div>
+        <br />
+        <!-- Oppurtunities -->
+        <div class="row">
+            {% if oppt %}
+            {% for oppt in oppt.each()[::-1] %}
+            <!--Start modification for adding the new blog way-->
+            <div class="col-md-6">
+                <div class="row mb-2 shadow bg-white" style="min-height: 160px;">
+                    <div class="col-4">
+                        <img class="img-fluid" src="{{oppt.val()['blog_url']}}" alt="Description">
+                        
+                    </div>
+                    <div class="col-8 mt-1">
+                        <h5 class="card-title">{{oppt.val()['title']}}</h5>
+                        <a href="{{url_for('oppt_details',key=oppt.key())}}"
+                                style="text-decoration: none; float: right;">
+                            Read more...</a>
+                    </div>
+                    <!-- <hr /> -->
+                </div>
+            </div>
+            
+            <!--End modification for adding the new blog way-->
+            {% endfor %}
+            {% endif %}
+        </div>
+        <center>
+            <h6><a href="/oppt">More Oppurtunities</a></h6>
+        </center>
+        
+    </div>
+</div>
+
+{% endblock %}
